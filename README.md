@@ -53,6 +53,14 @@ $ ./aes_simulator -s
 - [C++ bitwise operators - tutorials point](https://www.tutorialspoint.com/cplusplus/cpp_bitwise_operators.htm)
 - [how to read specific bits with bitwise operators - stack overflow](https://stackoverflow.com/questions/19626652/how-to-read-specific-bits-of-an-unsigned-int)
 
+- [Free online AES encryption and decryption tool - CODEPY](https://codepy.io/aes.html)
+
+- [AES explaineed step by step - the sslstore](https://www.thesslstore.com/blog/advanced-encryption-standard-aes-what-it-is-and-how-it-works/)
+
+- [AES Explained - computherphile in YouTube](https://www.youtube.com/watch?v=O4xNJsjtN6E&t=453s)
+
+- [SergyBel`s AES implementation - GitHub](https://github.com/SergeyBel/AES)
+
 **[Documentación online]()**
 
 **Licencia**
