@@ -14,4 +14,5 @@
 #define CATCH_CONFIG_MAIN
 #include "../include/Catch2/catch.h"
 #include "lfsr.test.h"
+// #include "aes.test.h"
 // #include "aes_simulator.test.h"
