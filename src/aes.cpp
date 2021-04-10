@@ -126,12 +126,39 @@ byte_grid_t AES_128::add_round_key(const byte_grid_t &grid, const byte_grid_t &k
   return aux_grid;
 }
 
-void generate_round_keys(void)
+/*!
+ * @brief Private method that expands the original key  
+ *
+ * Generates all the 10 round keys expected to use in each round, round_keys_ 
+ * attribute is modified to contain all the keys (inlcuding the original)
+ * 
+ * */
+
+void AES_128::generate_round_keys(void)
 {
+  std::vector<uint32_t> words;
+  words.resize(44);
+  for (int i = 0; i < 4; ++i)
+    words[i] = (this->gen_word(this->input_key_[0][i], this->input_key_[1][i],
+                               this->input_key_[2][i], this->input_key_[3][i]));
+
+  for (int i = 4; i < 44; ++i)
+  {
+    uint32_t temp = words[i - 1];
+    if ((i % 4) == 0)
+      temp = sub_word(cls_word(temp)) ^ this->RC[i / 4];
+    words[i] = words[i - 4] ^ temp;
+  }
+
+  for (int i = 0; i < 41; ++i)
+  {
+    std::vector<uint32_t> this_set = {words[i], words[i + 1], words[i + 2], words[i + 3]};
+    this->round_key_.push_back(this->cols_to_byte(this_set));
+  }
 }
 
-uint32_t word(const uint8_t k_0, const uint8_t k_1,
-              const uint8_t k_2, const uint8_t k_3)
+uint32_t AES_128::gen_word(const uint8_t k_0, const uint8_t k_1,
+                           const uint8_t k_2, const uint8_t k_3)
 {
   uint32_t result = 0x00000000;
   uint32_t current;
@@ -149,18 +176,41 @@ uint32_t word(const uint8_t k_0, const uint8_t k_1,
 
   return result;
 }
+
+std::vector<uint8_t> AES_128::gen_col(const uint32_t word)
+{
+  return std::vector<uint8_t>{
+      static_cast<uint8_t>((word & 0xff000000) >> 24),
+      static_cast<uint8_t>((word & 0x00ff0000) >> 16),
+      static_cast<uint8_t>((word & 0x0000ff00) >> 8),
+      static_cast<uint8_t>(word & 0x000000ff)};
+}
+
+byte_grid_t AES_128::cols_to_byte(const std::vector<uint32_t> words)
+{
+  return {
+      {gen_col(words[0])[0], gen_col(words[1])[0], gen_col(words[2])[0], gen_col(words[3])[0]},
+      {gen_col(words[0])[1], gen_col(words[1])[1], gen_col(words[2])[1], gen_col(words[3])[1]},
+      {gen_col(words[0])[2], gen_col(words[1])[2], gen_col(words[2])[2], gen_col(words[3])[2]},
+      {gen_col(words[0])[3], gen_col(words[1])[3], gen_col(words[2])[3], gen_col(words[3])[3]},
+  };
+}
+
 uint32_t AES_128::cls_word(const uint32_t rw)
 {
   return (rw << 8 | rw >> 24);
 }
 uint32_t AES_128::sub_word(const uint32_t sw)
 {
-  std::vector<uint8_t> word = {
-      static_cast<uint8_t>(sw >> 24),
-      static_cast<uint8_t>(sw >> 16),
-  };
+  // 32b word to 8b words vector
+  std::vector<uint8_t> word = gen_col(sw);
+
   std::vector<uint8_t> out = {};
+
+  // substitution stored into out
   for (int j = 0; j < 4; ++j)
-    out.push_back(S_BOX[hig_4_bits(grid[i][j])][low_4_bits(grid[i][j])]);
-  return word(out[0], out[1], out[2], out[3]);
+    out.push_back(S_BOX[hig_4_bits(word[j])][low_4_bits(word[j])]);
+
+  // out as 32b word.
+  return gen_word(out[0], out[1], out[2], out[3]);
 }
