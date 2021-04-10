@@ -42,6 +42,13 @@ void byte_print(uint8_t a)
     putchar((a >> i & 1) + '0');
 }
 
+void long_byte_print(uint8_t a)
+{
+  int i = 32;
+  while (i--)
+    putchar((a >> i & 1) + '0');
+}
+
 /**
  * @brief byte multiplication function. Two bytes and the algorithm must be provided as arguments.
  * If desired the trace can be shown by giving true as last argument

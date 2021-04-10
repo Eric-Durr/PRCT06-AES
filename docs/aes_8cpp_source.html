@@ -142,82 +142,105 @@ $(function() {
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;{</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;  std::vector&lt;uint32_t&gt; words;</div>
 <div class="line"><a name="l00140"></a><span class="lineno">  140</span>&#160;  words.resize(44);</div>
-<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4; ++i)</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    words[i] = (this-&gt;gen_word(this-&gt;input_key_[0][i], this-&gt;input_key_[1][i],</div>
-<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;                               this-&gt;input_key_[2][i], this-&gt;input_key_[3][i]));</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 4; i &lt; 44; ++i)</div>
-<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;  {</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;    uint32_t temp = words[i - 1];</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    <span class="keywordflow">if</span> ((i % 4) == 0)</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;      temp = sub_word(cls_word(temp)) ^ this-&gt;RC[i / 4];</div>
-<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    words[i] = words[i - 4] ^ temp;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  }</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 41; ++i)</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;  {</div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    std::vector&lt;uint32_t&gt; this_set = {words[i], words[i + 1], words[i + 2], words[i + 3]};</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    this-&gt;round_key_.push_back(this-&gt;cols_to_byte(this_set));</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;  }</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;}</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160; </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;uint32_t AES_128::gen_word(<span class="keyword">const</span> uint8_t k_0, <span class="keyword">const</span> uint8_t k_1,</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;                           <span class="keyword">const</span> uint8_t k_2, <span class="keyword">const</span> uint8_t k_3)</div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;{</div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  uint32_t result = 0x00000000;</div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;  uint32_t current;</div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  current = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(k_0);</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  current &lt;&lt;= 24;</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  result |= current;</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  current = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(k_1);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  current &lt;&lt;= 16;</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  result |= current;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;  current = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(k_2);</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;  current &lt;&lt;= 8;</div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;  result |= current;</div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  current = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(k_3);</div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  result |= current;</div>
+<div class="line"><a name="l00141"></a><span class="lineno">  141</span>&#160; </div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;  <span class="comment">// first 4 words are the original key</span></div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4; ++i)</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;  {</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;    words[i] = this-&gt;gen_word(this-&gt;input_key_[0][i], this-&gt;input_key_[1][i],</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;                              this-&gt;input_key_[2][i], this-&gt;input_key_[3][i]);</div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;    std::cout &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; std::hex &lt;&lt; words[i] &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  }</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="comment">// expansion for next 10 keys (40 words)</span></div>
+<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 4; i &lt; 44; ++i)</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;  {</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    uint32_t temp = words[i - 1];</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordflow">if</span> ((i % 4) == 0)</div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    {</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;      words[i] = words[i - 4] ^ sub_word(cls_word(temp)) ^ this-&gt;RC[(i / 4) - 1];</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    }</div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <span class="keywordflow">else</span></div>
+<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    {</div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;      words[i] = words[i - 4] ^ temp;</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    }</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;  }</div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <span class="comment">// Copy into attribute ordering the words into bytes</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 11; ++i)</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  {</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    std::vector&lt;uint32_t&gt; this_set = {words[i * 4],</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;                                      words[i * 4 + 1],</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;                                      words[i * 4 + 2],</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;                                      words[i * 4 + 3]};</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160; </div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    this-&gt;round_key_.push_back(cols_to_byte(this_set));</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  }</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;}</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160; </div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;  <span class="keywordflow">return</span> result;</div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;}</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160; </div>
-<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;std::vector&lt;uint8_t&gt; AES_128::gen_col(<span class="keyword">const</span> uint32_t word)</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;{</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordflow">return</span> std::vector&lt;uint8_t&gt;{</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;      <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>((word &amp; 0xff000000) &gt;&gt; 24),</div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;      <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>((word &amp; 0x00ff0000) &gt;&gt; 16),</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;      <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>((word &amp; 0x0000ff00) &gt;&gt; 8),</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;      <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(word &amp; 0x000000ff)};</div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;}</div>
-<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
-<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;<a class="code" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> AES_128::cols_to_byte(<span class="keyword">const</span> std::vector&lt;uint32_t&gt; words)</div>
-<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;{</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  <span class="keywordflow">return</span> {</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;      {gen_col(words[0])[0], gen_col(words[1])[0], gen_col(words[2])[0], gen_col(words[3])[0]},</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;      {gen_col(words[0])[1], gen_col(words[1])[1], gen_col(words[2])[1], gen_col(words[3])[1]},</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;      {gen_col(words[0])[2], gen_col(words[1])[2], gen_col(words[2])[2], gen_col(words[3])[2]},</div>
-<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;      {gen_col(words[0])[3], gen_col(words[1])[3], gen_col(words[2])[3], gen_col(words[3])[3]},</div>
-<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  };</div>
-<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;}</div>
-<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160; </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;uint32_t AES_128::cls_word(<span class="keyword">const</span> uint32_t rw)</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;{</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keywordflow">return</span> (rw &lt;&lt; 8 | rw &gt;&gt; 24);</div>
-<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;}</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;uint32_t AES_128::sub_word(<span class="keyword">const</span> uint32_t sw)</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;{</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;  <span class="comment">// 32b word to 8b words vector</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;  std::vector&lt;uint8_t&gt; word = gen_col(sw);</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160; </div>
-<div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  std::vector&lt;uint8_t&gt; out = {};</div>
-<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160; </div>
-<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <span class="comment">// substitution stored into out</span></div>
-<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; 4; ++j)</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    out.push_back(<a class="code" href="s__box_8h.html#affeebc393bcb4e7987114b3f234c01a4">S_BOX</a>[hig_4_bits(word[j])][low_4_bits(word[j])]);</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160; </div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;  <span class="comment">// out as 32b word.</span></div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;  <span class="keywordflow">return</span> gen_word(out[0], out[1], out[2], out[3]);</div>
-<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;}</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;uint32_t AES_128::gen_word(<span class="keyword">const</span> uint8_t k_0, <span class="keyword">const</span> uint8_t k_1,</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                           <span class="keyword">const</span> uint8_t k_2, <span class="keyword">const</span> uint8_t k_3)</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;{</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;  uint32_t result = 0x00000000;</div>
+<div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  uint32_t current;</div>
+<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;  current = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(k_0);</div>
+<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160; </div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  current &lt;&lt;= 24;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;  result |= current;</div>
+<div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  current = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(k_1);</div>
+<div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;  current &lt;&lt;= 16;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;  result |= current;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  current = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(k_2);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  current &lt;&lt;= 8;</div>
+<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  result |= current;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  current = <span class="keyword">static_cast&lt;</span>uint32_t<span class="keyword">&gt;</span>(k_3);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  result |= current;</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160; </div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keywordflow">return</span> result;</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;}</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160; </div>
+<div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;std::vector&lt;uint8_t&gt; AES_128::gen_col(<span class="keyword">const</span> uint32_t word)</div>
+<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;{</div>
+<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  <span class="keywordflow">return</span> std::vector&lt;uint8_t&gt;{</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;      <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>((word &amp; 0xff000000) &gt;&gt; 24),</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;      <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>((word &amp; 0x00ff0000) &gt;&gt; 16),</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;      <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>((word &amp; 0x0000ff00) &gt;&gt; 8),</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;      <span class="keyword">static_cast&lt;</span>uint8_t<span class="keyword">&gt;</span>(word &amp; 0x000000ff)};</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;}</div>
+<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160; </div>
+<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;<a class="code" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> AES_128::cols_to_byte(<span class="keyword">const</span> std::vector&lt;uint32_t&gt; words)</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;{</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;  <span class="keywordflow">return</span> {</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;      {gen_col(words[0])[0], gen_col(words[1])[0], gen_col(words[2])[0], gen_col(words[3])[0]},</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;      {gen_col(words[0])[1], gen_col(words[1])[1], gen_col(words[2])[1], gen_col(words[3])[1]},</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;      {gen_col(words[0])[2], gen_col(words[1])[2], gen_col(words[2])[2], gen_col(words[3])[2]},</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;      {gen_col(words[0])[3], gen_col(words[1])[3], gen_col(words[2])[3], gen_col(words[3])[3]},</div>
+<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;  };</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;}</div>
+<div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160; </div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;uint32_t AES_128::cls_word(<span class="keyword">const</span> uint32_t rw)</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;{</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;  uint32_t high = rw &lt;&lt; 8;</div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;  uint32_t low = rw &gt;&gt; 24;</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  <span class="keywordflow">return</span> high | low;</div>
+<div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;}</div>
+<div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160; </div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;uint32_t AES_128::sub_word(<span class="keyword">const</span> uint32_t sw)</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;{</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  <span class="comment">// 32b word to 8b words vector</span></div>
+<div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;  std::vector&lt;uint8_t&gt; word = gen_col(sw);</div>
+<div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160; </div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  std::vector&lt;uint8_t&gt; out = {};</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160; </div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;  <span class="comment">// substitution stored into out</span></div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; 4; ++j)</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;    out.push_back(<a class="code" href="s__box_8h.html#affeebc393bcb4e7987114b3f234c01a4">S_BOX</a>[hig_4_bits(word[j])][low_4_bits(word[j])]);</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160; </div>
+<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;  <span class="comment">// std::cout &lt;&lt; std::hex &lt;&lt; gen_word(out[0], out[1], out[2], out[3]) &lt;&lt; &quot;\n&quot;;</span></div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160; </div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <span class="comment">// out as 32b word.</span></div>
+<div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;  <span class="keywordflow">return</span> gen_word(out[0], out[1], out[2], out[3]);</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;}</div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassAES__128_html_a5b5762c42430a44646cec6ebf523816c"><div class="ttname"><a href="classAES__128.html#a5b5762c42430a44646cec6ebf523816c">AES_128::AES_128</a></div><div class="ttdeci">AES_128(const byte_grid_t &amp;block, const byte_grid_t &amp;input_key)</div><div class="ttdef"><b>Definition:</b> <a href="aes_8cpp_source.html#l00004">aes.cpp:4</a></div></div>
 <div class="ttc" id="aclassAES__128_html_a386eef80790a67b0496e41d2759f95cd"><div class="ttname"><a href="classAES__128.html#a386eef80790a67b0496e41d2759f95cd">AES_128::round</a></div><div class="ttdeci">byte_grid_t round(const byte_grid_t &amp;grid, const byte_grid_t &amp;round_key)</div><div class="ttdoc">generates only one round of the AES sequence of instructions</div><div class="ttdef"><b>Definition:</b> <a href="aes_8cpp_source.html#l00036">aes.cpp:36</a></div></div>
@@ -229,7 +252,7 @@ $(function() {
 <div class="ttc" id="as__box_8h_html_a7c460eb4c08310da6901549090dd4d57"><div class="ttname"><a href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; uint8_t &gt; &gt; byte_grid_t</div><div class="ttdef"><b>Definition:</b> <a href="s__box_8h_source.html#l00006">s_box.h:6</a></div></div>
 <div class="ttc" id="as__box_8h_html_affeebc393bcb4e7987114b3f234c01a4"><div class="ttname"><a href="s__box_8h.html#affeebc393bcb4e7987114b3f234c01a4">S_BOX</a></div><div class="ttdeci">const byte_grid_t S_BOX</div><div class="ttdef"><b>Definition:</b> <a href="s__box_8h_source.html#l00008">s_box.h:8</a></div></div>
 <div class="ttc" id="abinary__mult_8h_html_a86469dfb0af579419ce25be33178d1bcaaa28d81449f4bae922bb5e79f6f06be6"><div class="ttname"><a href="binary__mult_8h.html#a86469dfb0af579419ce25be33178d1bcaaa28d81449f4bae922bb5e79f6f06be6">AES</a></div><div class="ttdeci">@ AES</div><div class="ttdef"><b>Definition:</b> <a href="binary__mult_8h_source.html#l00014">binary_mult.h:14</a></div></div>
-<div class="ttc" id="abinary__mult_8h_html_ab6781f4a8047b308f34ac09babba1e8e"><div class="ttname"><a href="binary__mult_8h.html#ab6781f4a8047b308f34ac09babba1e8e">byte_mul</a></div><div class="ttdeci">uint8_t byte_mul(const uint8_t &amp;a, const uint8_t &amp;b, algortihm option, bool snitch=false)</div><div class="ttdoc">byte multiplication function. Two bytes and the algorithm must be provided as arguments....</div><div class="ttdef"><b>Definition:</b> <a href="binary__mult_8h_source.html#l00085">binary_mult.h:85</a></div></div>
+<div class="ttc" id="abinary__mult_8h_html_ab6781f4a8047b308f34ac09babba1e8e"><div class="ttname"><a href="binary__mult_8h.html#ab6781f4a8047b308f34ac09babba1e8e">byte_mul</a></div><div class="ttdeci">uint8_t byte_mul(const uint8_t &amp;a, const uint8_t &amp;b, algortihm option, bool snitch=false)</div><div class="ttdoc">byte multiplication function. Two bytes and the algorithm must be provided as arguments....</div><div class="ttdef"><b>Definition:</b> <a href="binary__mult_8h_source.html#l00092">binary_mult.h:92</a></div></div>
 <div class="ttc" id="abinary__mult_8h_html_a106dd1aefd8a6e4e8bf290bf06187b7c"><div class="ttname"><a href="binary__mult_8h.html#a106dd1aefd8a6e4e8bf290bf06187b7c">byte_add</a></div><div class="ttdeci">uint8_t byte_add(const uint8_t &amp;a, const uint8_t &amp;b)</div><div class="ttdoc">Adds two uint8_t values which expresses a byte from the LFSR, the result is returned.</div><div class="ttdef"><b>Definition:</b> <a href="binary__mult_8h_source.html#l00026">binary_mult.h:26</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

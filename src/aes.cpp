@@ -138,24 +138,50 @@ void AES_128::generate_round_keys(void)
 {
   std::vector<uint32_t> words;
   words.resize(44);
-  for (int i = 0; i < 4; ++i)
-    words[i] = (this->gen_word(this->input_key_[0][i], this->input_key_[1][i],
-                               this->input_key_[2][i], this->input_key_[3][i]));
 
+  // first 4 words are the original key
+  for (int i = 0; i < 4; ++i)
+  {
+    words[i] = this->gen_word(this->input_key_[0][i], this->input_key_[1][i],
+                              this->input_key_[2][i], this->input_key_[3][i]);
+
+    std::cout << i << ": " << std::hex << words[i] << "\n";
+  }
+
+  // expansion for next 10 keys (40 words)
   for (int i = 4; i < 44; ++i)
   {
     uint32_t temp = words[i - 1];
     if ((i % 4) == 0)
-      temp = sub_word(cls_word(temp)) ^ this->RC[i / 4];
-    words[i] = words[i - 4] ^ temp;
+    {
+      words[i] = words[i - 4] ^ sub_word(cls_word(temp)) ^ this->RC[(i / 4) - 1];
+    }
+    else
+    {
+      words[i] = words[i - 4] ^ temp;
+    }
   }
 
-  for (int i = 0; i < 41; ++i)
+  // Copy into attribute ordering the words into bytes
+  for (int i = 0; i < 11; ++i)
   {
-    std::vector<uint32_t> this_set = {words[i], words[i + 1], words[i + 2], words[i + 3]};
-    this->round_key_.push_back(this->cols_to_byte(this_set));
+    std::vector<uint32_t> this_set = {words[i * 4],
+                                      words[i * 4 + 1],
+                                      words[i * 4 + 2],
+                                      words[i * 4 + 3]};
+
+    this->round_key_.push_back(cols_to_byte(this_set));
   }
 }
+
+/*!
+ * 
+ * @brief generates a word from 4 key bytes
+ * 
+ * This method uses the bitwise operators to arrange the
+ * 4 bytes into one 32b word
+ * 
+ * */
 
 uint32_t AES_128::gen_word(const uint8_t k_0, const uint8_t k_1,
                            const uint8_t k_2, const uint8_t k_3)
@@ -163,6 +189,7 @@ uint32_t AES_128::gen_word(const uint8_t k_0, const uint8_t k_1,
   uint32_t result = 0x00000000;
   uint32_t current;
   current = static_cast<uint32_t>(k_0);
+
   current <<= 24;
   result |= current;
   current = static_cast<uint32_t>(k_1);
@@ -177,6 +204,15 @@ uint32_t AES_128::gen_word(const uint8_t k_0, const uint8_t k_1,
   return result;
 }
 
+/*!
+ * 
+ * @brief generates 4 bytes from one column
+ * 
+ * This method uses the bitwise operators to split into
+ * 4 bytes the given word.
+ * 
+ * */
+
 std::vector<uint8_t> AES_128::gen_col(const uint32_t word)
 {
   return std::vector<uint8_t>{
@@ -186,6 +222,11 @@ std::vector<uint8_t> AES_128::gen_col(const uint32_t word)
       static_cast<uint8_t>(word & 0x000000ff)};
 }
 
+/*!
+ * 
+ * @brief takes a vector of 4 words to order them into a grid
+ * 
+ * */
 byte_grid_t AES_128::cols_to_byte(const std::vector<uint32_t> words)
 {
   return {
@@ -196,10 +237,24 @@ byte_grid_t AES_128::cols_to_byte(const std::vector<uint32_t> words)
   };
 }
 
+/*!
+ * 
+ * @brief Cyclic left shift the given word which will be rotated
+ * 
+ * */
+
 uint32_t AES_128::cls_word(const uint32_t rw)
 {
-  return (rw << 8 | rw >> 24);
+  uint32_t high = rw << 8;
+  uint32_t low = rw >> 24;
+  return high | low;
 }
+
+/*!
+ * 
+ * @brief Applies the substitution with the s-box to the given word.
+ * 
+ * */
 uint32_t AES_128::sub_word(const uint32_t sw)
 {
   // 32b word to 8b words vector
@@ -210,6 +265,8 @@ uint32_t AES_128::sub_word(const uint32_t sw)
   // substitution stored into out
   for (int j = 0; j < 4; ++j)
     out.push_back(S_BOX[hig_4_bits(word[j])][low_4_bits(word[j])]);
+
+  // std::cout << std::hex << gen_word(out[0], out[1], out[2], out[3]) << "\n";
 
   // out as 32b word.
   return gen_word(out[0], out[1], out[2], out[3]);
