@@ -10,7 +10,7 @@ DOXYGEN_CONFIGURATION_FILE_NAME = Doxyfile
 
 # Executable file name 
 BIN_NAME = aes_simulator
-TEST_NAME = aes_simulatortest
+TEST_NAME = aes_simulator_test
 
 # File extentions
 SRC_EXT = cpp
