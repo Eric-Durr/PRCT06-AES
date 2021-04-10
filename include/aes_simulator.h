@@ -3,8 +3,6 @@
 #include <sstream>
 #include <stdio.h>
 #include <stdint.h>
-#include "s_box.h"
-
 /**
  * @brief Checks the program command line input. If the input is the desired returns 0
  * and the main program can proceed.

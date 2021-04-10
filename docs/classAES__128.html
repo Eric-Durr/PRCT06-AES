@@ -85,16 +85,20 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a386eef80790a67b0496e41d2759f95cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12bc4e107a97e15e97c54f2fd14e08cd"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAES__128.html#a12bc4e107a97e15e97c54f2fd14e08cd">round_key</a> (void) const</td></tr>
 <tr class="separator:a12bc4e107a97e15e97c54f2fd14e08cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a44c17fd8bacd285aa5817d03104b0f02"><td class="memItemLeft" align="right" valign="top"><a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAES__128.html#a44c17fd8bacd285aa5817d03104b0f02">sub_bytes</a> (const <a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> &amp;grid)</td></tr>
-<tr class="separator:a44c17fd8bacd285aa5817d03104b0f02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4dd146c2eb03c114b606b08bcff8f2b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAES__128.html#a4dd146c2eb03c114b606b08bcff8f2b6">shift_row</a> (const <a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> &amp;grid)</td></tr>
-<tr class="separator:a4dd146c2eb03c114b606b08bcff8f2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a489c45b91aed1b1c66fcf6918edf8c12"><td class="memItemLeft" align="right" valign="top"><a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAES__128.html#a489c45b91aed1b1c66fcf6918edf8c12">subs_bytes</a> (const <a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> &amp;grid)</td></tr>
+<tr class="memdesc:a489c45b91aed1b1c66fcf6918edf8c12"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private method that applies the substitution according to the defined S_BOX <br  />
+ for AES.  <a href="classAES__128.html#a489c45b91aed1b1c66fcf6918edf8c12">More...</a><br /></td></tr>
+<tr class="separator:a489c45b91aed1b1c66fcf6918edf8c12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb0d715fbaed2f72ef9a727a2c9c63eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAES__128.html#afb0d715fbaed2f72ef9a727a2c9c63eb">shift_rows</a> (const <a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> &amp;grid)</td></tr>
+<tr class="memdesc:afb0d715fbaed2f72ef9a727a2c9c63eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private method that applies the row shifting to the given grid (which comes from sub_bytes())  <a href="classAES__128.html#afb0d715fbaed2f72ef9a727a2c9c63eb">More...</a><br /></td></tr>
+<tr class="separator:afb0d715fbaed2f72ef9a727a2c9c63eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d8dda8e3c192c3c68713817e6e09caf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classAES__128.html#a3d8dda8e3c192c3c68713817e6e09caf">mix_column</a> (const <a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> &amp;grid)</td></tr>
+<tr class="memdesc:a3d8dda8e3c192c3c68713817e6e09caf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private method that the second part of the permutation to the current block.  <a href="classAES__128.html#a3d8dda8e3c192c3c68713817e6e09caf">More...</a><br /></td></tr>
 <tr class="separator:a3d8dda8e3c192c3c68713817e6e09caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="aes_8h_source.html#l00007">7</a> of file <a class="el" href="aes_8h_source.html">aes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="aes_8h_source.html#l00006">6</a> of file <a class="el" href="aes_8h_source.html">aes.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a5b5762c42430a44646cec6ebf523816c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a5b5762c42430a44646cec6ebf523816c">&#9670;&nbsp;</a></span>AES_128()</h2>
@@ -122,13 +126,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00003">3</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;{</div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;  this-&gt;inp_block_ = block;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;  this-&gt;input_key_ = input_key;</div>
-<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  this-&gt;round_key_ = this-&gt;add_round_key(this-&gt;inp_block_,</div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;                                         this-&gt;input_key_);</div>
-<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00004">4</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;{</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;  this-&gt;inp_block_ = block;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;  this-&gt;input_key_ = input_key;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;  this-&gt;round_key_ = this-&gt;add_round_key(this-&gt;inp_block_,</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;                                         this-&gt;input_key_);</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -156,8 +160,8 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="aes_8h_source.html#l00017">17</a> of file <a class="el" href="aes_8h_source.html">aes.h</a>.</p>
-<div class="fragment"><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{};</div>
+<p class="definition">Definition at line <a class="el" href="aes_8h_source.html#l00016">16</a> of file <a class="el" href="aes_8h_source.html">aes.h</a>.</p>
+<div class="fragment"><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{};</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -180,16 +184,16 @@ Public Member Functions</h2></td></tr>
 
 <p>generates encripted block by aplying the AES instruction round key -&gt; +9 rounds -&gt; out </p>
 
-<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00015">15</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;  <span class="comment">// // init round (add round key)</span></div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="comment">// this-&gt;add_round_key(this-&gt;inp_block_, this-&gt;input_key_);</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="comment">// byte_grid_t cyper_output = this-&gt;round_key_;</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;  <span class="comment">// // 9 rounds of byte sub -&gt; shift row -&gt; mix column -&gt; add round key</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="comment">// for (int i = 0; i &lt; 9; ++i)</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00016">16</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;{</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;  <span class="comment">// // init round (add round key)</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;  <span class="comment">// this-&gt;add_round_key(this-&gt;inp_block_, this-&gt;input_key_);</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;  <span class="comment">// byte_grid_t cyper_output = this-&gt;round_key_;</span></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;  <span class="comment">// // 9 rounds of byte sub -&gt; shift row -&gt; mix column -&gt; add round key</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;  <span class="comment">// for (int i = 0; i &lt; 9; ++i)</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -209,8 +213,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00050">50</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;{}</div>
+<p>Private method that the second part of the permutation to the current block. </p>
+<p>The method multiplies each column with a base column to create the output block</p>
+<div class="fragment"><div class="line">[02 03 01 01] [c1]   [c<span class="stringliteral">&#39;1]</span></div>
+<div class="line"><span class="stringliteral">[01 02 03 01] [c2] = [c&#39;</span>2] </div>
+<div class="line">[01 01 02 03] [c3]   [c<span class="stringliteral">&#39;3]</span></div>
+<div class="line"><span class="stringliteral">[03 01 01 02] [c4]   [c&#39;</span>4] </div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>mixed column bytes grid </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00096">96</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;{}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -249,9 +261,9 @@ Public Member Functions</h2></td></tr>
 </ol>
 <dl class="section return"><dt>Returns</dt><dd>modified grid </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00036">36</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;{</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;}</div>
+<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00037">37</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;{</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -279,19 +291,19 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="aes_8h_source.html#l00020">20</a> of file <a class="el" href="aes_8h_source.html">aes.h</a>.</p>
-<div class="fragment"><div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;{ <span class="keywordflow">return</span> this-&gt;round_key_; }</div>
+<p class="definition">Definition at line <a class="el" href="aes_8h_source.html#l00019">19</a> of file <a class="el" href="aes_8h_source.html">aes.h</a>.</p>
+<div class="fragment"><div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{ <span class="keywordflow">return</span> this-&gt;round_key_; }</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a4dd146c2eb03c114b606b08bcff8f2b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dd146c2eb03c114b606b08bcff8f2b6">&#9670;&nbsp;</a></span>shift_row()</h2>
+<a id="afb0d715fbaed2f72ef9a727a2c9c63eb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb0d715fbaed2f72ef9a727a2c9c63eb">&#9670;&nbsp;</a></span>shift_rows()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> AES_128::shift_row </td>
+          <td class="memname"><a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> AES_128::shift_rows </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> &amp;&#160;</td>
           <td class="paramname"><em>grid</em></td><td>)</td>
@@ -300,19 +312,33 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00049">49</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;{}</div>
+<p>Private method that applies the row shifting to the given grid (which comes from sub_bytes()) </p>
+<p>The method shifts N times the current row elements, N refers to the actual row number</p>
+<div class="fragment"><div class="line">[n1 n5 n9  n13] &lt;&lt; x0        [n1  n5  n9  n13]</div>
+<div class="line">[n2 n6 n10 n14] &lt;&lt; x1   --&gt;  [n6  n10 n14 n2 ] </div>
+<div class="line">[n3 n7 n11 n15] &lt;&lt; x2        [n11 n15 n3  n7 ]</div>
+<div class="line">[n4 n8 n12 n16] &lt;&lt; x3        [n16  n4 n8  n12] </div>
+</div><!-- fragment --><dl class="section return"><dt>Returns</dt><dd>shifted bytes grid </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00073">73</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;{</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a>{{grid[0][0], grid[0][1], grid[0][2], grid[0][3]},</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                     {grid[1][1], grid[1][2], grid[1][3], grid[1][0]},</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                     {grid[2][2], grid[2][3], grid[2][0], grid[2][1]},</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;                     {grid[3][3], grid[3][0], grid[3][1], grid[3][2]}};</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a44c17fd8bacd285aa5817d03104b0f02"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a44c17fd8bacd285aa5817d03104b0f02">&#9670;&nbsp;</a></span>sub_bytes()</h2>
+<a id="a489c45b91aed1b1c66fcf6918edf8c12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a489c45b91aed1b1c66fcf6918edf8c12">&#9670;&nbsp;</a></span>subs_bytes()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> AES_128::sub_bytes </td>
+          <td class="memname"><a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> AES_128::subs_bytes </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> &amp;&#160;</td>
           <td class="paramname"><em>grid</em></td><td>)</td>
@@ -321,14 +347,20 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00041">41</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
-<div class="fragment"><div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;{</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;  <a class="code" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> out = {{}, {}, {}, {}};</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4; ++i)</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; 4; ++j)</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;      out[i].push_back(<a class="code" href="s__box_8h.html#affeebc393bcb4e7987114b3f234c01a4">S_BOX</a>[hig_4_bits(grid[i][j])][low_4_bits(grid[i][j])]);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;  <span class="keywordflow">return</span> out;</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;}</div>
+<p>Private method that applies the substitution according to the defined S_BOX <br  />
+ for AES. </p>
+<p>It usses the private methods low_4_bits(const uint8_t&amp; byte) and hig_4_bits(const uint8_t&amp; byte) to generate the eexpected output value. <br  />
+</p>
+<dl class="section return"><dt>Returns</dt><dd>substituted bytes grid </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="aes_8cpp_source.html#l00050">50</a> of file <a class="el" href="aes_8cpp_source.html">aes.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;{</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;  <a class="code" href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a> out = {{}, {}, {}, {}};</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 4; ++i)</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; 4; ++j)</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;      out[i].push_back(<a class="code" href="s__box_8h.html#affeebc393bcb4e7987114b3f234c01a4">S_BOX</a>[hig_4_bits(grid[i][j])][low_4_bits(grid[i][j])]);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;  <span class="keywordflow">return</span> out;</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -337,8 +369,8 @@ Public Member Functions</h2></td></tr>
 <li>src/<a class="el" href="aes_8cpp_source.html">aes.cpp</a></li>
 </ul>
 </div><!-- contents -->
-<div class="ttc" id="as__box_8h_html_a7c460eb4c08310da6901549090dd4d57"><div class="ttname"><a href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; uint8_t &gt; &gt; byte_grid_t</div><div class="ttdef"><b>Definition:</b> <a href="s__box_8h_source.html#l00004">s_box.h:4</a></div></div>
-<div class="ttc" id="as__box_8h_html_affeebc393bcb4e7987114b3f234c01a4"><div class="ttname"><a href="s__box_8h.html#affeebc393bcb4e7987114b3f234c01a4">S_BOX</a></div><div class="ttdeci">const byte_grid_t S_BOX</div><div class="ttdef"><b>Definition:</b> <a href="s__box_8h_source.html#l00006">s_box.h:6</a></div></div>
+<div class="ttc" id="as__box_8h_html_a7c460eb4c08310da6901549090dd4d57"><div class="ttname"><a href="s__box_8h.html#a7c460eb4c08310da6901549090dd4d57">byte_grid_t</a></div><div class="ttdeci">std::vector&lt; std::vector&lt; uint8_t &gt; &gt; byte_grid_t</div><div class="ttdef"><b>Definition:</b> <a href="s__box_8h_source.html#l00006">s_box.h:6</a></div></div>
+<div class="ttc" id="as__box_8h_html_affeebc393bcb4e7987114b3f234c01a4"><div class="ttname"><a href="s__box_8h.html#affeebc393bcb4e7987114b3f234c01a4">S_BOX</a></div><div class="ttdeci">const byte_grid_t S_BOX</div><div class="ttdef"><b>Definition:</b> <a href="s__box_8h_source.html#l00008">s_box.h:8</a></div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#pragma once
+
 const uint8_t s3g_poly = 0xA9;
 const uint8_t aes_poly = 0x1B;
 

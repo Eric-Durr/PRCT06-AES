@@ -1,5 +1,7 @@
 # SSI P06 - IMPLEMENTACIÓN DE AES
 
+[![C/C++ CI](https://github.com/Eric-Durr/PRCT06-AES/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/Eric-Durr/PRCT06-AES/actions/workflows/c-cpp.yml)
+
 > Se implementa el algoritmo de Rijndael.
 
 **Estructura del repositorio:**
@@ -93,7 +95,7 @@ X |7 51 a3 40 8f 92 9d 38 f5 bc b6 da 21 10 ff f3 d2
 
 - [SergyBel`s AES implementation - GitHub](https://github.com/SergeyBel/AES)
 
-**[Documentación online]()**
+**[Documentación online](https://eric-durr.github.io/PRCT06-AES/)**
 
 **Licencia**
 

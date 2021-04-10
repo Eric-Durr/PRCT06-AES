@@ -31,11 +31,22 @@ SCENARIO("Testing AES private methods")
       }
       AND_THEN("Sub_bytes generates the expected matrix")
       {
-        byte_grid_t sub = testing_private.sub_bytes(testing_private.round_key());
+        byte_grid_t sub = testing_private.subs_bytes(testing_private.round_key());
         CHECK(sub == byte_grid_t{{0x63, 0x09, 0xcd, 0xba},
                                  {0xca, 0x53, 0x60, 0x70},
                                  {0xb7, 0xd0, 0xe0, 0xe1},
                                  {0x04, 0x51, 0xe7, 0x8c}});
+      }
+      AND_THEN("shift_rows generates the expected matrix")
+      {
+        byte_grid_t shi = testing_private
+                              .shift_rows(testing_private
+                                              .subs_bytes(testing_private.round_key()));
+
+        CHECK(shi == byte_grid_t{{0x63, 0x09, 0xcd, 0xba},
+                                 {0x53, 0x60, 0x70, 0xca},
+                                 {0xe0, 0xe1, 0xb7, 0xd0},
+                                 {0x8c, 0x04, 0x51, 0xe7}});
       }
     }
   }
