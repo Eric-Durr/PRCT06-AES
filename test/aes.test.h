@@ -22,12 +22,12 @@ SCENARIO("Testing AES private methods")
       AES_128 testing_private(input, key);
       THEN("The round key attribute is the first round key")
       {
-        CHECK(testing_private.round_key() == byte_grid_t{
-                                                 {0x00, 0x40, 0x80, 0xc0},
-                                                 {0x10, 0x50, 0x90, 0xd0},
-                                                 {0x20, 0x60, 0xa0, 0xe0},
-                                                 {0x30, 0x70, 0xb0, 0xf0},
-                                             });
+        CHECK(testing_private.round_key(1) == byte_grid_t{
+                                                  {0x00, 0x40, 0x80, 0xc0},
+                                                  {0x10, 0x50, 0x90, 0xd0},
+                                                  {0x20, 0x60, 0xa0, 0xe0},
+                                                  {0x30, 0x70, 0xb0, 0xf0},
+                                              });
       }
       AND_THEN("Sub_bytes generates the expected matrix")
       {
@@ -44,6 +44,31 @@ SCENARIO("Testing AES private methods")
                                               .subs_bytes(testing_private.round_key()));
 
         CHECK(shi == byte_grid_t{{0x63, 0x09, 0xcd, 0xba},
+                                 {0x53, 0x60, 0x70, 0xca},
+                                 {0xe0, 0xe1, 0xb7, 0xd0},
+                                 {0x8c, 0x04, 0x51, 0xe7}});
+      }
+      AND_THEN("mix_column generates the expected matrix")
+      {
+        byte_grid_t mix = testing_private
+                              .mix_column(testing_private
+                                              .shift_rows(testing_private
+                                                              .subs_bytes(testing_private.round_key())));
+
+        CHECK(mix == byte_grid_t{{0x63, 0x09, 0xcd, 0xba},
+                                 {0x53, 0x60, 0x70, 0xca},
+                                 {0xe0, 0xe1, 0xb7, 0xd0},
+                                 {0x8c, 0x04, 0x51, 0xe7}});
+      }
+
+      AND_THEN("applying one more add round key, generates the first round")
+      {
+        byte_grid_t mix = testing_private
+                              .mix_column(testing_private
+                                              .shift_rows(testing_private
+                                                              .subs_bytes(testing_private.round_key())));
+
+        CHECK(mix == byte_grid_t{{0x63, 0x09, 0xcd, 0xba},
                                  {0x53, 0x60, 0x70, 0xca},
                                  {0xe0, 0xe1, 0xb7, 0xd0},
                                  {0x8c, 0x04, 0x51, 0xe7}});

@@ -14,4 +14,9 @@ jobs:
     - uses: actions/checkout@v2
     - name: Tests control
       run: make test
-  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: making main program
+      run: make

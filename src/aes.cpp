@@ -5,8 +5,7 @@ AES_128::AES_128(const byte_grid_t &block, const byte_grid_t &input_key)
 {
   this->inp_block_ = block;
   this->input_key_ = input_key;
-  this->round_key_ = this->add_round_key(this->inp_block_,
-                                         this->input_key_);
+  generate_round_keys();
 }
 
 /*!
@@ -93,7 +92,18 @@ byte_grid_t AES_128::shift_rows(const byte_grid_t &grid)
  * 
  * @returns mixed column bytes grid
  * */
-byte_grid_t AES_128::mix_column(const byte_grid_t &grid) {}
+byte_grid_t AES_128::mix_column(const byte_grid_t &grid)
+{
+  byte_grid_t out = {{0x00, 0x00, 0x00, 0x00},
+                     {0x00, 0x00, 0x00, 0x00},
+                     {0x00, 0x00, 0x00, 0x00},
+                     {0x00, 0x00, 0x00, 0x00}};
+  for (int i = 0; i < 4; ++i)
+    for (int j = 0; j < 4; ++j)
+      for (int k = 0; k < 4; ++k)
+        out[i][j] = byte_add(out[j][i], byte_mul(MIX_GRID[i][k], grid[k][i], AES));
+  return out;
+}
 
 /*!
  * @brief Private method that adds the key to the given grid 
@@ -114,4 +124,43 @@ byte_grid_t AES_128::add_round_key(const byte_grid_t &grid, const byte_grid_t &k
     aux_grid.push_back(aux_line);
   }
   return aux_grid;
+}
+
+void generate_round_keys(void)
+{
+}
+
+uint32_t word(const uint8_t k_0, const uint8_t k_1,
+              const uint8_t k_2, const uint8_t k_3)
+{
+  uint32_t result = 0x00000000;
+  uint32_t current;
+  current = static_cast<uint32_t>(k_0);
+  current <<= 24;
+  result |= current;
+  current = static_cast<uint32_t>(k_1);
+  current <<= 16;
+  result |= current;
+  current = static_cast<uint32_t>(k_2);
+  current <<= 8;
+  result |= current;
+  current = static_cast<uint32_t>(k_3);
+  result |= current;
+
+  return result;
+}
+uint32_t AES_128::cls_word(const uint32_t rw)
+{
+  return (rw << 8 | rw >> 24);
+}
+uint32_t AES_128::sub_word(const uint32_t sw)
+{
+  std::vector<uint8_t> word = {
+      static_cast<uint8_t>(sw >> 24),
+      static_cast<uint8_t>(sw >> 16),
+  };
+  std::vector<uint8_t> out = {};
+  for (int j = 0; j < 4; ++j)
+    out.push_back(S_BOX[hig_4_bits(grid[i][j])][low_4_bits(grid[i][j])]);
+  return word(out[0], out[1], out[2], out[3]);
 }

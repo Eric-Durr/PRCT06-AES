@@ -82,9 +82,10 @@ void byte_print(uint8_t a)
  *      yes -> bitwise XOR between the product result and A
  */
 
-uint8_t byte_mul(uint8_t &a, uint8_t &b, algortihm option, bool snitch = false)
+uint8_t byte_mul(const uint8_t &a, const uint8_t &b, algortihm option, bool snitch = false)
 {
 
+  uint8_t c = a;
   uint8_t prod;
 
   (b & (1 << 0)) == 1 ? prod = a : prod = 0x00;
@@ -93,39 +94,39 @@ uint8_t byte_mul(uint8_t &a, uint8_t &b, algortihm option, bool snitch = false)
   if (snitch)
   {
     std::cout << "STEP " << k << ": \n";
-    byte_print(a);
+    byte_print(c);
     std::cout << "\n";
   }
   for (int i = 1; i < 8; i++)
   {
     if (((a & (1 << 7)) >> 7) == 0x01)
     {
-      a <<= 1;
+      c <<= 1;
       if (snitch)
       {
         std::cout << "STEP " << ++k << ": \n";
-        byte_print(a);
+        byte_print(c);
         std::cout << " + ";
       }
       switch (option)
       {
       case AES:
-        a = byte_add(a, aes_poly);
+        c = byte_add(c, aes_poly);
         if (snitch)
         {
           byte_print(aes_poly);
           std::cout << " = ";
-          byte_print(a);
+          byte_print(c);
           std::cout << "\n";
         }
         break;
       case S3G:
-        a = byte_add(a, s3g_poly);
+        c = byte_add(c, s3g_poly);
         if (snitch)
         {
           byte_print(s3g_poly);
           std::cout << " = ";
-          byte_print(a);
+          byte_print(c);
           std::cout << "\n";
         }
         break;
@@ -135,17 +136,17 @@ uint8_t byte_mul(uint8_t &a, uint8_t &b, algortihm option, bool snitch = false)
     }
     else
     {
-      a <<= 1;
+      c <<= 1;
       if (snitch)
       {
         std::cout << "STEP " << ++k << ": \n";
-        byte_print(a);
+        byte_print(c);
         std::cout << "\n";
       }
     }
     if (((b & (1 << i)) >> i) == 0x01)
     {
-      prod = byte_add(prod, a);
+      prod = byte_add(prod, c);
     }
   }
   return prod;
