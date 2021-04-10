@@ -1,4 +1,4 @@
 .vscode
 build 
-binary_mult
-binary_mult_test
+aes_simulator
+aes_simulator_test
