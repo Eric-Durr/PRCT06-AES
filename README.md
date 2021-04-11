@@ -30,17 +30,72 @@ $ make
 
 **Ejecución del programa**
 
-**Formato esperado de los ficheros de input de clave y texto original**
-
-```
-b0  b1  b2  b3
-b4  b5  b6  b7
-b8  b9  b10 b11
-b12 b13 b14 b15 
+```bash
+$ ./aes_simulator <key> <input> ["trace"]
 ```
 
 **Ejemplos**
 
+```
+./aes_simulator 000102030405060708090a0b0c0d0e0f 00112233445566778899aabbccddeeff
+--- Encriptado AES de 128 b ---
+
+ Bloque de texto plano origen:
+
+04488cc
+115599dd
+2266aaee
+3377bbff
+
+
+ Bloque encriptado resultante:
+696ad870
+c47bcdb4
+e04b7c5
+d830805a
+```
+
+```
+./aes_simulator 000102030405060708090a0b0c0d0e0f 00112233445566778899aabbccddeeff trace
+--- Encriptado AES de 128 b ---
+
+ Bloque de texto plano origen:
+
+04488cc
+115599dd
+2266aaee
+3377bbff
+LAP 0:
+R0 (Subclave =0 1 2 3 4 5 6 7 8 9 a b c d e f ) = 0 10 20 30 40 50 60 70 80 90 a0 b0 c0 d0 e0 f0
+LAP 1:
+R1 (Subclave =d6 aa 74 fd d2 af 72 fa da a6 78 f1 d6 ab 76 fe ) = 89 d8 10 e8 85 5a ce 68 2d 18 43 d8 cb 12 8f e4
+LAP 2:
+R2 (Subclave =b6 92 cf b 64 3d bd f1 be 9b c5 0 68 30 b3 fe ) = 49 15 59 8f 55 e5 d7 a0 da ca 94 fa 1f a 63 f7
+LAP 3:
+R3 (Subclave =b6 ff 74 4e d2 c2 c9 bf 6c 59 c bf 4 69 bf 41 ) = fa 63 6a 28 25 b3 39 c9 40 66 8a 31 57 24 4d 17
+LAP 4:
+R4 (Subclave =47 f7 f7 bc 95 35 3e 3 f9 6c 32 bc fd 5 8d fd ) = 24 72 40 23 69 66 b3 fa 6e d2 75 32 88 42 5b 6c
+LAP 5:
+R5 (Subclave =3c aa a3 e8 a9 9f 9d eb 50 f3 af 57 ad f6 22 aa ) = c8 16 77 bc 9b 7a c9 3b 25 2 79 92 b0 26 19 96
+LAP 6:
+R6 (Subclave =5e 39 f 7d f7 a6 92 96 a7 55 3d c1 a a3 1f 6b ) = c6 2f e1 9 f7 5e ed c3 cc 79 39 5d 84 f9 cf 5d
+LAP 7:
+R7 (Subclave =14 f9 70 1a e3 5f e2 8c 44 a df 4d 4e a9 c0 26 ) = d1 87 6c f 79 c4 30 a b4 55 94 ad d6 6f f4 1f
+LAP 8:
+R8 (Subclave =47 43 87 35 a4 1c 65 b9 e0 16 ba f4 ae bf 7a d2 ) = fd e3 ba d2 5 e5 d0 d7 35 47 96 4e f1 fe 37 f1
+LAP 9:
+R9 (Subclave =54 99 32 d1 f0 85 57 68 10 93 ed 9c be 2c 97 4e ) = bd 6e 7c 3d f2 b5 77 9e b 61 21 6e 8b 10 b6 89
+LAP a:
+R10 (Subclave =13 11 1d 7f e3 94 4a 17 f3 7 a7 8b 4d 2b 30 c5 ) = 69 c4 e0 d8 6a 7b 4 30 d8 cd b7 80 70 b4 c5 5a
+Bloque de texto cifrado: 69 c4 e0 d8 6a 7b 4 30 d8 cd b7 80 70 b4 c5 5a
+
+
+ Bloque encriptado resultante:
+696ad870
+c47bcdb4
+e04b7c5
+d830805a
+```
 
 **Lanzamiento de los tests**
 ```bash
@@ -52,7 +107,7 @@ Se compila y ejecuta el conjunto de tests para luego ejecutarlos, de suceder sat
 También se puede ejecutar un despliegue detallado de los tests si ya se ha lanzado el comando anterior:
 
 ```bash
-$ ./aes_simulator -s
+$ ./aes_simulator_test -s
 ```
 
 **AES S-box**
