@@ -6,15 +6,6 @@
 
 #pragma once
 
-const uint8_t s3g_poly = 0xA9;
-const uint8_t aes_poly = 0x1B;
-
-enum algortihm
-{
-  AES,
-  S3G
-};
-
 /**
  * @brief Adds two uint8_t values which expresses a byte from the LFSR, the result is returned
  * 
@@ -42,13 +33,11 @@ void byte_print(uint8_t a)
     putchar((a >> i & 1) + '0');
 }
 
-void long_byte_print(uint8_t a)
-{
-  int i = 32;
-  while (i--)
-    putchar((a >> i & 1) + '0');
-}
-
+/*!
+ * @brief Compact GF(2^8) multiplication function for AES
+ *
+ * @returns the 8 bits of the resultant multiplication between the given numbers.
+ * */
 uint8_t gf2n_multiply(uint8_t a, uint8_t b)
 {
   uint8_t p = 0;

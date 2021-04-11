@@ -17,7 +17,7 @@ AES_128::AES_128(const byte_grid_t &block, const byte_grid_t &input_key)
 byte_grid_t AES_128::generate(const bool &snitch)
 {
   byte_grid_t output;
-  // // init round (add round key)
+  //  init round (add round key)
   output = this->add_round_key(this->inp_block_, this->input_key_);
   if (snitch)
   {
@@ -25,6 +25,8 @@ byte_grid_t AES_128::generate(const bool &snitch)
     std::cout << "R0 (Subclave =" << this->grid_to_s(this->input_key_)
               << ") = " << this->grid_to_s(output) << "\n";
   }
+
+  // 9 rounds of the secuence sub bytes -> shift rows -> mix columns -> ad round key
   for (int i = 0; i < 9; ++i)
   {
     output = this->round(output, this->round_key_[i + 1]);
@@ -35,7 +37,7 @@ byte_grid_t AES_128::generate(const bool &snitch)
                 << ") = " << this->grid_to_s(output) << "\n";
     }
   }
-
+  // Last sub byte -> shift rows -> add round key
   output = this->add_round_key(this->shift_rows(this->subs_bytes(output)), this->round_key_[10]);
   if (snitch)
   {
@@ -62,6 +64,11 @@ byte_grid_t AES_128::round(const byte_grid_t &grid, const byte_grid_t &round_key
   return this->add_round_key(this->mix_column(this->shift_rows(this->subs_bytes(grid))), round_key);
 }
 
+/*!
+ * @brief prints a grid in a linear secuence of hex numbers
+ *
+ * @returns the output string generated from the grid.
+ * */
 std::string AES_128::grid_to_s(const byte_grid_t &grid) const
 {
   std::ostringstream out;
