@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "../include/aes.h"
 #include "../include/binary_mult.h"
 
@@ -12,15 +14,37 @@ AES_128::AES_128(const byte_grid_t &block, const byte_grid_t &input_key)
  * @brief generates encripted block by aplying the AES instruction 
    round key -> +9 rounds -> out
  * */
-byte_grid_t AES_128::generate(void)
+byte_grid_t AES_128::generate(const bool &snitch)
 {
-
+  byte_grid_t output;
   // // init round (add round key)
-  // this->add_round_key(this->inp_block_, this->input_key_);
-  // byte_grid_t cyper_output = this->round_key_;
+  output = this->add_round_key(this->inp_block_, this->input_key_);
+  if (snitch)
+  {
+    std::cout << "LAP 0:\n";
+    std::cout << "R0 (Subclave =" << this->grid_to_s(this->input_key_)
+              << ") = " << this->grid_to_s(output) << "\n";
+  }
+  for (int i = 0; i < 9; ++i)
+  {
+    output = this->round(output, this->round_key_[i + 1]);
+    if (snitch)
+    {
+      std::cout << "LAP " << i + 1 << ":\n";
+      std::cout << "R" << i + 1 << " (Subclave =" << this->grid_to_s(this->round_key_[i + 1])
+                << ") = " << this->grid_to_s(output) << "\n";
+    }
+  }
 
-  // // 9 rounds of byte sub -> shift row -> mix column -> add round key
-  // for (int i = 0; i < 9; ++i)
+  output = this->add_round_key(this->shift_rows(this->subs_bytes(output)), this->round_key_[10]);
+  if (snitch)
+  {
+    std::cout << "LAP " << 10 << ":\n";
+    std::cout << "R10 (Subclave =" << this->grid_to_s(this->round_key_[10])
+              << ") = " << this->grid_to_s(output) << "\n";
+    std::cout << "Bloque de texto cifrado: " << this->grid_to_s(output) << "\n";
+  }
+  return output;
 }
 
 /*!
@@ -35,6 +59,19 @@ byte_grid_t AES_128::generate(void)
  * */
 byte_grid_t AES_128::round(const byte_grid_t &grid, const byte_grid_t &round_key)
 {
+  return this->add_round_key(this->mix_column(this->shift_rows(this->subs_bytes(grid))), round_key);
+}
+
+std::string AES_128::grid_to_s(const byte_grid_t &grid) const
+{
+  std::ostringstream out;
+
+  for (int i = 0; i < 4; ++i)
+  {
+    for (int j = 0; j < 4; ++j)
+      out << std::hex << static_cast<int>(grid[j][i]) << " ";
+  }
+  return std::string{out.str()};
 }
 
 /*!
@@ -52,6 +89,7 @@ byte_grid_t AES_128::subs_bytes(const byte_grid_t &grid)
   for (int i = 0; i < 4; ++i)
     for (int j = 0; j < 4; ++j)
       out[i].push_back(S_BOX[hig_4_bits(grid[i][j])][low_4_bits(grid[i][j])]);
+
   return out;
 }
 
@@ -71,7 +109,6 @@ byte_grid_t AES_128::subs_bytes(const byte_grid_t &grid)
  * */
 byte_grid_t AES_128::shift_rows(const byte_grid_t &grid)
 {
-
   return byte_grid_t{{grid[0][0], grid[0][1], grid[0][2], grid[0][3]},
                      {grid[1][1], grid[1][2], grid[1][3], grid[1][0]},
                      {grid[2][2], grid[2][3], grid[2][0], grid[2][1]},
@@ -94,14 +131,20 @@ byte_grid_t AES_128::shift_rows(const byte_grid_t &grid)
  * */
 byte_grid_t AES_128::mix_column(const byte_grid_t &grid)
 {
-  byte_grid_t out = {{0x00, 0x00, 0x00, 0x00},
-                     {0x00, 0x00, 0x00, 0x00},
-                     {0x00, 0x00, 0x00, 0x00},
-                     {0x00, 0x00, 0x00, 0x00}};
+  byte_grid_t out = {
+      {0x00, 0x00, 0x00, 0x00},
+      {0x00, 0x00, 0x00, 0x00},
+      {0x00, 0x00, 0x00, 0x00},
+      {0x00, 0x00, 0x00, 0x00}};
   for (int i = 0; i < 4; ++i)
-    for (int j = 0; j < 4; ++j)
-      for (int k = 0; k < 4; ++k)
-        out[i][j] = byte_add(out[j][i], byte_mul(MIX_GRID[i][k], grid[k][i], AES));
+  {
+
+    out[0][i] = gf2n_multiply(0x02, grid[0][i]) ^ gf2n_multiply(0x03, grid[1][i]) ^ grid[2][i] ^ grid[3][i];
+    out[1][i] = grid[0][i] ^ gf2n_multiply(0x02, grid[1][i]) ^ gf2n_multiply(0x03, grid[2][i]) ^ grid[3][i];
+    out[2][i] = grid[0][i] ^ grid[1][i] ^ gf2n_multiply(0x02, grid[2][i]) ^ gf2n_multiply(0x03, grid[3][i]);
+    out[3][i] = gf2n_multiply(0x03, grid[0][i]) ^ grid[1][i] ^ grid[2][i] ^ gf2n_multiply(0x02, grid[3][i]);
+  }
+
   return out;
 }
 
@@ -115,15 +158,16 @@ byte_grid_t AES_128::mix_column(const byte_grid_t &grid)
  * */
 byte_grid_t AES_128::add_round_key(const byte_grid_t &grid, const byte_grid_t &key)
 {
-  byte_grid_t aux_grid;
+  byte_grid_t out;
   for (int i = 0; i < 4; ++i)
   {
     std::vector<uint8_t> aux_line;
     for (int j = 0; j < 4; ++j)
       aux_line.push_back(byte_add(grid[i][j], key[i][j]));
-    aux_grid.push_back(aux_line);
+    out.push_back(aux_line);
   }
-  return aux_grid;
+
+  return out;
 }
 
 /*!
@@ -144,8 +188,6 @@ void AES_128::generate_round_keys(void)
   {
     words[i] = this->gen_word(this->input_key_[0][i], this->input_key_[1][i],
                               this->input_key_[2][i], this->input_key_[3][i]);
-
-    std::cout << i << ": " << std::hex << words[i] << "\n";
   }
 
   // expansion for next 10 keys (40 words)

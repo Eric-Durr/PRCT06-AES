@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lfsr_43',['LFSR',['../classLFSR.html',1,'']]]
+  ['lfsr',['LFSR',['../classLFSR.html',1,'']]]
 ];

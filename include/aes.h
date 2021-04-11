@@ -23,7 +23,7 @@ class AES_128
 public:
     AES_128(const byte_grid_t &block, const byte_grid_t &input_key);
     ~AES_128(void){};
-    byte_grid_t generate(void);
+    byte_grid_t generate(const bool &snitch = false);
     byte_grid_t round(const byte_grid_t &grid, const byte_grid_t &round_key);
     const byte_grid_t &round_key(const int &pos) const { return this->round_key_[pos]; }
 
@@ -31,6 +31,8 @@ public:
     byte_grid_t subs_bytes(const byte_grid_t &grid);
     byte_grid_t shift_rows(const byte_grid_t &grid);
     byte_grid_t mix_column(const byte_grid_t &grid);
+
+    std::string grid_to_s(const byte_grid_t &grid) const;
 
 private:
     void generate_round_keys(void);
